@@ -1,4 +1,4 @@
-package com.lovewithbabbar;
+package src.com.lovewithbabbar;
 
 public class Main {
     public static void main(String[] args) {
