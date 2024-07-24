@@ -3,8 +3,6 @@ package src.com.lovewithbabbar;
 import java.util.Arrays;
 
 public class BubbleSort {
-
-    public static class Main {
         public static void main(String[] args) {
 
             //int[] inputArray={6,8,9,7,56,83,27,4,14,687,54};
@@ -12,7 +10,6 @@ public class BubbleSort {
 
             System.out.println(Arrays.toString(bubbleSortAlgorithm(inputArray)));
         }
-    }
 
     static int[] bubbleSortAlgorithm(int[] inputArray){
 
