@@ -14,13 +14,25 @@ public class BinarySearchProblem {
         char target='a';
         System.out.println(smallestLetterGreaterThanTarget(inputArray,target));*/
 
-       /* int[] inputArray2={5,7,7,8,8,10};
+       /* int[] inputArray2={5,7,7, 8,8,10};
         int target=4;
         System.out.println(Arrays.toString(firstAndLastPosition(inputArray2,target)));*/
 
-        int[] inputArray={3,5,7,9,10,11,56,90,100,130,160,160,170,200};
+        /*int[] inputArray={3,5,7,9,10,11,56,90,100,130,160,160,170,200};
         int target=100;
-        System.out.println(findRange(inputArray, target));
+        System.out.println(findRange(inputArray, target));*/
+
+        /*int[] inputArray={1,2,3,5,6,4,3,2};
+        System.out.println(findPeakElementFormAnArray(inputArray));*/
+
+     /*   //int[] inputArray={1,2,3,5,6,4,3,2};
+        int[] inputArray={1,2,4,5,3,1};
+        //int[] inputArray={4,5,6,7,0,1,2};
+        System.out.println(findInMountainArray(inputArray,3));*/
+
+        int[] inputArray={3,4,5,6,7,8,9,11,0,1,2};
+        int target =11;
+        System.out.println(findInRotatedSortedArray(inputArray,target));
     }
 
 
@@ -86,7 +98,7 @@ public class BinarySearchProblem {
         return output;
     }
 
- static int searchIndex(int[] input,int target, boolean findStartIndex){
+    static int searchIndex(int[] input,int target, boolean findStartIndex){
         int start=0;
         int end=input.length-1;
         int ans=-1;
@@ -136,6 +148,121 @@ public class BinarySearchProblem {
         }
         return -1;
     }
+
+
+    static int findPeakElementFormAnArray(int[] inputArray){
+        int start = 0;
+        int end=inputArray.length-1;
+        int mid=0;
+        while (start<end){
+             mid = start + (end-start)/2;
+            if(inputArray[mid]>inputArray[mid+1]){
+                end = mid;
+            } else if (inputArray[mid]<inputArray[mid+1]) {
+                start =mid+1;
+            }
+        }
+        return inputArray[start];
+    }
+
+
+     static int findInMountainArray(int[] inputArray,int target) {
+         int end = findEndIndex(inputArray);
+         int isAsc = findElementUsingBinarySearch(inputArray, target, 0, end,true);
+         if (isAsc == -1){
+        isAsc = findElementUsingBinarySearch(inputArray, target, end, inputArray.length,false);
+        }
+         return isAsc;
+    }
+
+    private static int findElementUsingBinarySearch(int[] inputArray, int target, int start, int end,boolean isAsc) {
+        while (start<=end){
+            int mid=start+(end-start)/2;
+            if(inputArray[mid]==target){
+                return mid;
+            }
+            if(isAsc){
+                if(inputArray[mid]<target){
+                    start=mid+1;
+                }else if(inputArray[mid]>target){
+                    end=mid-1;
+                }
+            }else {
+                if(inputArray[mid]>target){
+                    start=mid+1;
+                }else if(inputArray[mid]<target){
+                    end=mid-1;
+                }
+            }
+        }
+        return -1;
+    }
+
+    private static int findEndIndex(int[] inputArray) {
+          int start=0;
+          int end=inputArray.length-1;
+          while (start<end){
+              int mid = start + (end-start)/2;
+              if(inputArray[mid]>inputArray[mid+1]){
+                  end=mid;
+              }else if(inputArray[mid]< inputArray[mid+1]) {
+                  start=mid+1;
+              }
+          }
+          return start;
+    }
+
+
+        /* Ask In Amazon and google Interview */
+      static int findInRotatedSortedArray(int[] inputArray,int target){
+          int pivot = findPivot(inputArray);
+          if(inputArray[pivot]==target){
+                 return pivot;
+          }
+          int firstHalf =findTargetInRotatedSortedArray(inputArray,target,0,pivot);
+        return firstHalf==-1?findTargetInRotatedSortedArray(inputArray,target,pivot+1,inputArray.length-1):firstHalf;
+      }
+
+    private static int findTargetInRotatedSortedArray(int[] inputArray, int target, int start,int end) {
+
+
+
+          while (start<=end){
+              int mid = start + (end-start)/2;
+              if(inputArray[mid]>target){
+                  end=mid-1;
+              } else if (inputArray[mid]<target) {
+                  start=mid+1;
+              }else {
+                  return mid;
+              }
+          }
+          return -1;
+    }
+
+    static int findPivot(int[] arr){
+            int start=0;
+            int end = arr.length-1;
+
+            while (start<=end){
+                int mid = start + (end - start) /2;
+
+                if( start < end && arr[mid]>arr[mid+1]){
+                    return mid;
+                }
+
+                if(start<end && arr[mid]<arr[mid-1]){
+                   return mid-1;
+                }
+
+                if(arr[start] >= arr[mid]){
+                    end=mid-1;
+                }else {
+                    start=mid+1;
+                }
+            }
+            return -1;
+      }
 
 
 
